@@ -1,0 +1,82 @@
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .api-error {
+    color: red;
+    margin-bottom: 10px;
+}
+.api-ok {
+    color: green;
+    margin-bottom: 10px;
+}
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    align-content: center;
+  }
+  .form-container2 {
+    display: flex;
+    align-content: space-between;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+img {
+    width: 143px;
+    height: 142px;
+}
+  .form-container {
+    margin-bottom: 15px;
+  }
+  p.error {
+    margin-bottom: -12px;
+    margin-top: 6px;
+}
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  button {
+    padding: 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+
+  @media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+        margin-left: -10px;
+    }
+}
