@@ -1,4 +1,5 @@
 # Dockerfile
+
 # Step 1: Use a Node.js image to build the app
 FROM node:18 as builder
 # Set working directory inside the container
