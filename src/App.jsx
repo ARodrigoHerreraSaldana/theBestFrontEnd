@@ -9,24 +9,32 @@ import RequireAuth from './components/requireauth.jsx';
 // import EnhancedTable from './components/mytable2.jsx';
 import EnhancedTable2 from './components/mytable3.jsx';
 //import BasicModal from './components/Modal.jsx';
+
+import Navbar from './components/navBar.jsx';
+
+
 function App() {
     return (
       <Router>
-        <div>
+       
+           <Navbar/>
           <Routes>
+            
             <Route path="/" element={<Login />} />
             {/* <Route path="/table" element={<BasicTable/>}/>  */}
             {/* <Route path="/basicModal" element={<BasicModal text="me gusta el cereal"/>}/> */}
             {/* <Route path="/table3" element={<EnhancedTable2/>}/>   */}
             <Route path="/register" element={<FormRegistrationApp />} />
-            <Route path="/dashboard" element=
-            {<RequireAuth>
+            <Route path="/dashboard" element={
+            // <RequireAuth>
+           
              <EnhancedTable2/>
-            </RequireAuth>
-            }/>
+           
+            //  </RequireAuth>
+             }/>
             
           </Routes>
-        </div>
+
       </Router>
     );
   }

@@ -1,5 +1,6 @@
 .container {
-    width: 100%;
+    width: 30%;
+    max-width: 310px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -7,6 +8,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
+  .supercontainer {
+    height: 100%;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+}
+
   form {
     display: flex;
     flex-direction: column;
@@ -64,8 +73,8 @@ img {
 
   @media (max-width: 768px) {
     .container {
-        width: 100%;
+        width: 60%;
+        max-width: 310px;
         padding: 10px;
-        margin-left: -10px;
     }
 }

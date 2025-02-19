@@ -1,5 +1,4 @@
 .container {
-    width: 100%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -77,6 +76,5 @@ img {
     .container {
         width: 100%;
         padding: 10px;
-        margin-left: -10px;
     }
 }

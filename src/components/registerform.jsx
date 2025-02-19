@@ -66,7 +66,8 @@ const FormRegistrationApp = () => {
          }
         try {
             // Post the form data to the API
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/newUser`, {
+            console.log('xxx')
+            const response = await fetch(`${import.meta.env.VITE_API_URL}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -80,15 +81,18 @@ const FormRegistrationApp = () => {
                 }),
             });
             const responseJSON = await response.json();
-
+            console.log(responseJSON)
             if (response.status == '200') {
-                setApiResponse({ status: 'correct', message: responseJSON?.success || 'ok' })
+                setApiResponse({ status: 'correct', message: responseJSON.message || 'ok' })
                 await sleep(1000)
                 navigate("/");
             }
-            if (response.status == '400') {
-                setApiResponse({ status: 'error', message: responseJSON?.error || 'mysterious error' })
-                throw new Error({message: responseJSON?.error || 'mysterious error'});
+            else if (response.status == '400') {
+                setApiResponse({ status: 'error', message: responseJSON.message || 'mysterious error' })
+                throw new Error(responseJSON.message);
+            }
+            else{
+                setApiResponse({status:'network', message:'The network failed'})
             }
             // if (!response.ok) {
             //     setApiResponse({ status: 'network', message:'The network failedd'})
@@ -100,7 +104,7 @@ const FormRegistrationApp = () => {
         } catch (error) {
             
             setApiResponse({ status: 'error', message: error.message})
-            console.error('There was an error!', error);
+            console.error('There was an error!', error.message);
         }
 
     };
@@ -120,7 +124,7 @@ const FormRegistrationApp = () => {
                 <form onSubmit={handleSubmit2}>
                     <div className="form-container2">
                         <h2>Sign up </h2>
-                        <img src={"/static/images/farmLogo.png"}
+                        <img src={"/static/images/pencilLogo.png"}
                 alt="Description of Image"
               />
                     </div>
@@ -179,7 +183,9 @@ const FormRegistrationApp = () => {
                 </form>
 
             </div>
+            <div>
             <Link to="/">Log in</Link>
+            </div>
         </>
     );
 };

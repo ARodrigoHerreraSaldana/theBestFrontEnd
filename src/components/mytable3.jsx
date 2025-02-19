@@ -34,23 +34,25 @@ import useAuth from "../../auth/authorizer.jsx"
 //Function to fetch the table with the new rows
 const fetchTable = async () => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/lastLogin`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL_3}`);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const result = await response.json();
-
-    let rows = result.map((element, index) => {
+    console.log(result)
+    let rows = result.message[0].map((element, index) => {
       return {
         id: index + 1,
         full_name: element.full_name,
         occupation: element.occupation,
         email: element.email,
-        logged: element.created_at == null ? "-" : element.created_at,
-        status: element.status ? "OK" : "NO",
+        logged: element.updatedAt,
+        status: element.isActive,
       };
     });
+    console.log(rows)
     return rows;
+    
   } catch (err) {
     console.error(err.message);
   }
@@ -147,10 +149,10 @@ const headCells = [
     label: "logged",
   },
   {
-    id: "status",
+    id: "isActive",
     numeric: false,
     disablePadding: false,
-    label: "status",
+    label: "isActive",
   },
 
 ];
@@ -353,6 +355,7 @@ export default function EnhancedTable2() {
       let response=await setFalse(obj.data)
       handleModalFunctions(response.response || 'unknown message',1)
     }
+    console.log('I pressed it')
     const result = await fetchTable();
     setRows(result);
   };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import "./registform.css";
+import "./login.css";
 import useAuth from "../../auth/authorizer.jsx";
 
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
     setBlockLogin(true)
     console.log(import.meta.env.VITE_API_URL)
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/checkUser`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_2}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,17 +30,22 @@ const Login = () => {
       var responseJSON = await response.json();
       console.log(responseJSON)
       if (response.status == "200") {
-        setApiResponse({ status: 'correct', message: responseJSON?.response || 'ok' })
+        setApiResponse({ status: 'correct', message: responseJSON.message || 'ok' })
         login().then(() => {
           navigate(state?.path || "/dashboard");
         });
       }
-      if (response.status == '400') {
-        setApiResponse({ status: 'error', message: responseJSON?.response || 'Network error' })
+      else if (response.status == '403') {
+        setApiResponse({ status: 'error', message: responseJSON.message || 'mysterious error' })
+        throw new Error(responseJSON.message);
     }
+    else{
+      setApiResponse({status:'network', message:'The network failed'})
+  }
+
 } catch (error) {
-  setApiResponse({ status: 'error', message: (responseJSON?.response || 'Network error' )?? 'Network error' })        
-    console.error('There was an error!', error);
+            setApiResponse({ status: 'error', message: error.message})
+            console.error('There was an error!', error.message);
 }finally{
   setBlockLogin(false)
 }
@@ -51,12 +56,12 @@ const Login = () => {
   };
   return (
     <>
-      <div>
+    <div className="supercontainer">
         <div className="container">
             <form onSubmit={handleLogin}>
             <div className="form-container2">
               <h2>Log in</h2>
-              <img src={"/static/images/farmLogo.png"}
+              <img src={"/static/images/pencilLogo.png"}
                 alt="Description of Image"
               />
             </div>
@@ -89,12 +94,12 @@ const Login = () => {
               Log in
             </button>
             {apiResponse.status == 'error' && <div className="api-error">{apiResponse.message}</div>}
-                    {apiResponse.status == 'correct' && <div className="api-ok">{apiResponse.message}</div>}
-                    {apiResponse.status == 'network' && <div className="api-error">{apiResponse.message}</div>}
+            {apiResponse.status == 'correct' && <div className="api-ok">{apiResponse.message}</div>}
+            {apiResponse.status == 'network' && <div className="api-error">{apiResponse.message}</div>}
           </form>
+          <Link to="/register">Don&#39;t have an account?</Link>
         </div>
-        <Link to="/register">Don&#39;t have an account?</Link>
-      </div>
+        </div>
     </>
   );
 };
