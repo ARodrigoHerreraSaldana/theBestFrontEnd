@@ -120,15 +120,16 @@ const FormRegistrationApp = () => {
     //   };
     return (
         <>
-            <div className="container">
+        <div className="supercontainer-register">
+            <div className="container-register">
                 <form onSubmit={handleSubmit2}>
-                    <div className="form-container2">
+                    <div className="form-container-register">
                         <h2>Sign up </h2>
                         <img src={"/static/images/pencilLogo.png"}
                 alt="Description of Image"
               />
                     </div>
-                    <div className="form-container">
+                    <div className="information-container">
                         <label>First Name</label>
                         <input maxLength={30} type="text" name="firstName" value={inputFields.firstName} onChange={handleChange}></input>
                         {errors.firstName ? (
@@ -137,7 +138,7 @@ const FormRegistrationApp = () => {
                             </p>
                         ) : null}
                     </div>
-                    <div className="form-container">
+                    <div className="information-container">
                         <label>Last Name</label>
                         <input maxLength={30} type="text" name="lastName" value={inputFields.lastName} onChange={handleChange}></input>
                         {errors.lastName ? (
@@ -146,7 +147,7 @@ const FormRegistrationApp = () => {
                             </p>
                         ) : null}
                     </div>
-                    <div className="form-container">
+                    <div className="information-container">
                         <label>Email</label>
                         <input type="email" name="email" value={inputFields.email} onChange={handleChange}></input>
                         {errors.email ? (
@@ -155,7 +156,7 @@ const FormRegistrationApp = () => {
                             </p>
                         ) : null}
                     </div>
-                    <div className="form-container">
+                    <div className="information-container">
                         <label>Occupation</label>
                         <input maxLength={30} type="text" name="occupation" value={inputFields.occupation} onChange={handleChange}></input>
                         {errors.occupation ? (
@@ -164,7 +165,7 @@ const FormRegistrationApp = () => {
                             </p>
                         ) : null}
                     </div>
-                    <div className="form-container">
+                    <div className="information-container">
                         <label>Password</label>
                         <input maxLength={30} type="password" name="password" value={inputFields.password} onChange={handleChange}></input>
                         {errors.password ? (
@@ -180,11 +181,10 @@ const FormRegistrationApp = () => {
                     <button type="submit">
                         Create your account
                     </button>
+                    <Link to="/">Log in</Link>
                 </form>
-
+                
             </div>
-            <div>
-            <Link to="/">Log in</Link>
             </div>
         </>
     );
