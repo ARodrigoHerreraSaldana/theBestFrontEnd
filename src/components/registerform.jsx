@@ -149,7 +149,7 @@ const FormRegistrationApp = () => {
                     </div>
                     <div className="information-container">
                         <label>Email</label>
-                        <input type="email" name="email" value={inputFields.email} onChange={handleChange}></input>
+                        <input maxLength={30} type="email" name="email" value={inputFields.email} onChange={handleChange}></input>
                         {errors.email ? (
                             <p className="error">
                                 You are missing your email

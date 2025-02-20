@@ -355,7 +355,6 @@ export default function EnhancedTable2() {
       let response=await setFalse(obj.data)
       handleModalFunctions(response.response || 'unknown message',1)
     }
-    console.log('I pressed it')
     const result = await fetchTable();
     setRows(result);
   };
@@ -451,7 +450,6 @@ React.useEffect(() => {
 
   return (
     <>
-    <span onClick={logOut}>Log out</span>
   <BasicModal text='hello this is my modal' ref={childRef}/>
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -535,9 +533,6 @@ React.useEffect(() => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage} />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding" />
     </Box>
     </>
   );
