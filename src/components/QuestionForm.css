@@ -1,0 +1,33 @@
+.Question-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top: 5px solid #007bff;
+    /* border-top-color: #007bff; */
+    /* border-top-width: thick; */
+    width: 50%;
+    margin: 0 auto;
+}
+.untitledForm {
+    border-style: none;
+    border-radius: 0px;
+    font-size: 35px;
+    outline: none;
+}
+.form-description {
+    border-style: none;
+    border-radius: 0px;
+    outline: none;
+
+}
+
+.SuperContainerNavBar {
+    background-color: #E8E8E8;
+    padding-top: 10px;
+    height: 800px;
+}
+
+input.untitledForm::placeholder {
+    color: black;
+}

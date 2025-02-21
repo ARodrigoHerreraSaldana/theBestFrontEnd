@@ -11,7 +11,8 @@ import EnhancedTable2 from './components/mytable3.jsx';
 //import BasicModal from './components/Modal.jsx';
 
 import Navbar from './components/navBar.jsx';
-import Hello from './components/hello.jsx';
+import TemplateGenerator from './components/templateGenerator.jsx';
+import Question from './components/QuestionForm.jsx';
 
 function App() {
     return (
@@ -28,9 +29,20 @@ function App() {
             // {/* </RequireAuth> */}
             
                }>
-              <Route path="templates"  element={<Hello/>}/>
+              <Route path="templates"  element={<TemplateGenerator/>}/>
               <Route path="panel"  element={<EnhancedTable2/>}/>  
             </Route>
+
+
+            <Route path="/templates/:id" element={
+              
+              // {/* <RequireAuth> */}}
+              // {/* </RequireAuth> */}
+              <Navbar>
+              <Question/>
+              </Navbar>
+              }/>
+
           </Routes>
 
       </Router>

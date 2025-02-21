@@ -46,7 +46,7 @@ const fetchTable = async () => {
         full_name: element.full_name,
         occupation: element.occupation,
         email: element.email,
-        logged: element.updatedAt,
+        logged: new Date(element.updatedAt).toLocaleTimeString('en-US'),
         status: element.isActive,
       };
     });

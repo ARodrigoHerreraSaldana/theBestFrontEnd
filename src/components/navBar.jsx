@@ -30,6 +30,7 @@ const Navbar = ({children}) => {
       }
 
       const handleClickTemplates = async (e) => {
+        
         navigateTo('/dashboard/templates')
     }
   
@@ -60,7 +61,7 @@ const Navbar = ({children}) => {
                     <button onClick={handleClickTemplates} >Templates</button>
                     </li>
                     <li>
-                    <button onClick={handleClickPanel} >Panel</button>
+                    <button onClick={handleClickPanel} >Admin Panel</button>
                     </li>
                     <li>
                     <button onClick={handleClickLogOut} >LogOut</button>
@@ -69,6 +70,8 @@ const Navbar = ({children}) => {
             </div>
         </nav>
         <main>
+        
+        {children}
         <Outlet />
         </main>
         </header>
