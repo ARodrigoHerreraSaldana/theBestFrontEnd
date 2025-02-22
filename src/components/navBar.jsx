@@ -69,12 +69,13 @@ const Navbar = ({children}) => {
                 </ul>
             </div>
         </nav>
+
+        </header>
         <main>
         
         {children}
         <Outlet />
         </main>
-        </header>
         </>
     )
 }

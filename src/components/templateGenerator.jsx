@@ -21,6 +21,7 @@ const { state } = useLocation();
       <div className='containerButton'>
       <button className='button-sign' onClick={createNewTemplate}>
         <span className='sign'>+</span>
+     
         </button>
         </div>
     </div>
