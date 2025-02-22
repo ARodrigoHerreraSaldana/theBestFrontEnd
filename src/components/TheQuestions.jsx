@@ -2,8 +2,13 @@ import { forwardRef, useRef, useState, useImperativeHandle } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../components/TheQuestions.css";
 import { meta } from "@eslint/js";
+import PropTypes from "prop-types";
 
-const TheQuestions = forwardRef(function TheQuestions(props, ref) {
+
+
+const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) {
+
+  
   const [inputFields, setInputFields] = useState([{ question: '', answer: '' , multianswers:[], type:''}]);
   const [selectedOptions, setSelectedOptions] = useState([{typeofQuestion:'answer-text'}]);
 // Each question could have four radioOptions
@@ -40,7 +45,7 @@ const TheQuestions = forwardRef(function TheQuestions(props, ref) {
   const newQuestion = () => {
     let newfield = { question: "", answer: "" , multianswers:[''], type:''};
     let newSelector={typeofQuestion:'answer-text'}
-    let newRowRadioButton={ question: "", answers: [] };
+    let newRowRadioButton={ question: "", answers: [''] };
     //Maxium 4 Questions
     let metaInputFields = [...inputFields];
     if (metaInputFields.length < 4) 
@@ -90,9 +95,19 @@ const TheQuestions = forwardRef(function TheQuestions(props, ref) {
  };
 
 
+// const ValidateData = (obj) => {
+//   for(let x of obj)
+//   {
+//     for(let key in x)
+//     {
+// console.log('key', key, x[key])
+//     }    
+//   }
+// }
 const sendData =() =>{
     let input=[...inputFields];
     console.log('andamos en el child \n',input)
+    sendDataFromChild(input)
 }
 
 
@@ -137,6 +152,7 @@ const sendData =() =>{
               placeholder="Question"
               value={input.question}
               onChange={(event) => handleFormChange(index, event,'simple')}
+              required
             />
             <input
               className="theTypeofQuestion"
@@ -145,6 +161,7 @@ const sendData =() =>{
               placeholder="Answers"
               value={input.answer}
               onChange={(event) => handleFormChange(index, event,'simple')}
+              required
             />
             </>
       }
@@ -161,6 +178,7 @@ const sendData =() =>{
               placeholder="Question"
               value={input.question}
               onChange={(event) => handleFormChange(index, event, 'multi')}
+              required
             />
             <button className="addOption" onClick={()=>newQuestionRadioButton(index)}>
                 <span className="spanAddOption">Add Option</span>
@@ -178,6 +196,7 @@ const sendData =() =>{
                     name="theQuestionsRadio"
                     value="coding"
                     className="theQuestionsCheckbox"
+             
                   />
                     <input
                   className="theTypeofQuestion"
@@ -186,6 +205,7 @@ const sendData =() =>{
                   placeholder="Answers"
                   value={input.multianswers[radioindex]}
                   onChange={(event) => handleFormChange(index, event, 'multi', radioindex)}
+                  required
                 />
 
             </div>
@@ -201,4 +221,9 @@ const sendData =() =>{
     </>
   );
 });
+
+TheQuestions.propTypes = {
+  sendDataFromChild: PropTypes.func.isRequired,
+};
+
 export default TheQuestions;
