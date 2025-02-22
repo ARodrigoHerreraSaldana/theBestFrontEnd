@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import "./login.css";
 import useAuth from "../../auth/authorizer.jsx";
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,13 +12,15 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const { state } = useLocation();
+  const [cookies, setCookie] = useCookies(['user']);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setBlockLogin(true)
     console.log(import.meta.env.VITE_API_URL)
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_2}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_2}/login`, {
+        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,6 +37,7 @@ const Login = () => {
         login().then(() => {
           navigate(state?.path || "/dashboard");
         });
+        
       }
       else if (response.status == '403') {
         setApiResponse({ status: 'error', message: responseJSON.message || 'mysterious error' })

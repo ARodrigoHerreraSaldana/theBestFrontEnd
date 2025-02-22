@@ -3,6 +3,33 @@ import { useNavigate, Link } from "react-router-dom";
 import "../components/QuestionForm.css";
 import TheQuestions from "./TheQuestions.jsx";
 import { useLocation } from 'react-router-dom'
+
+async function sendTemplate() {
+    const url = "http://localhost:4000/logout";
+    try {
+        const response = await fetch(url, {
+            credentials: "include",
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log(response)
+        if (!response) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        if(response.status==200)
+        {
+            return true
+        }
+  
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error(error.message);
+    }
+}
+
 const Question = () => {
   const [inputTitle, setInputTitle] = useState([
     { title: "", description: "" },

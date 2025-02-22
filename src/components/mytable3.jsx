@@ -34,7 +34,7 @@ import useAuth from "../../auth/authorizer.jsx"
 //Function to fetch the table with the new rows
 const fetchTable = async () => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL_3}`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/lastLogin`);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -46,7 +46,7 @@ const fetchTable = async () => {
         full_name: element.full_name,
         occupation: element.occupation,
         email: element.email,
-        logged: new Date(element.updatedAt).toLocaleTimeString('en-US'),
+        logged: element.updatedAt,
         status: element.isActive,
       };
     });

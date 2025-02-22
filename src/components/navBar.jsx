@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import { useNavigate, Outlet } from 'react-router-dom';
 
 async function getData() {
-    const url = "http://localhost:4000/logout";
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL_2}/logout`, {
+            credentials: "include",
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -14,6 +14,10 @@ async function getData() {
         console.log(response)
         if (!response) {
             throw new Error(`Response status: ${response.status}`);
+        }
+        if(response.status==200)
+        {
+            return true
         }
   
       const json = await response.json();
@@ -48,7 +52,7 @@ const Navbar = ({children}) => {
         else
         {
             console.log('xxx')
-            navigateTo('/dashboard/cart2')
+            navigateTo('/')
         }
       }
 
