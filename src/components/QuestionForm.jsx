@@ -43,7 +43,7 @@ const Question = () => {
         <TheQuestions ref={ref} />
       </div>
       <div className="containerButton2">
-      <button className="sendForm" onClick={(event) => Submit(event)}>Submit</button>
+      <button className="sendForm" onClick={() => ref.current?.sendData()}>Submit</button>
       </div>
     </div>
   );
