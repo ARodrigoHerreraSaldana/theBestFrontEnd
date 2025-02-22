@@ -2,31 +2,45 @@ import { forwardRef, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../components/QuestionForm.css";
 import TheQuestions from "./TheQuestions.jsx";
-
+import { useLocation } from 'react-router-dom'
 const Question = () => {
   const [inputTitle, setInputTitle] = useState([
     { title: "", description: "" },
   ]);
   const [datafromChild, setDataFromChild]=useState({})
+  const [success,setSuccess]=useState(false)
   const ref = useRef();
-
+  const navigate = useNavigate();
+  const location = useLocation();
   const handleDataFromChild= (data) => {
     console.log(data)
     setDataFromChild(data);
-    
   }
 
+  const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    console.log('xxx')
     event.preventDefault();
+ 
+   
+   
     if (event.target.checkValidity()) {
-        console.log('valid')
-        console.log('to the Backend',datafromChild)
-      } else {
-        console.error('Invalid')
+        setSuccess(true)
+        await sleep(1000)
+        navigate('/dashboard/templates')
+        let path=location.pathname.toString()
 
+        let newString=path.substring(11)
+        console.log(newString)
+        
+      } else {
+        setSuccess(false)
       }
 };
+
   return (
     <form onSubmit={handleSubmit}>
     <div className="SuperContainerNavBar">
@@ -61,7 +75,8 @@ const Question = () => {
         <TheQuestions ref={ref} sendDataFromChild={handleDataFromChild}/>
       </div>
       <div className="containerButton2">
-      <button className="sendForm" onClick={() => ref.current?.sendData()}>Submit</button>
+      <button type="submit" className="sendForm" onClick={(event) => ref.current?.sendData(event)}>Submit</button>
+      {success &&  <span className="success-message">Form was sent to the server</span>}
       </div>
     </div>
     </form>

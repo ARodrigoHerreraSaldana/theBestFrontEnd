@@ -10,7 +10,6 @@ const navigate = useNavigate();
 const { state } = useLocation();
   const createNewTemplate = () => {
   const id = uuid()
-  console.log('el gio es joto', id)
   login().then(() => {
     navigate(state?.path || '/templates/'+id);
   });

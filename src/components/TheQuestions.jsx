@@ -104,10 +104,11 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) 
 //     }    
 //   }
 // }
-const sendData =() =>{
+const sendData =(event) =>{
     let input=[...inputFields];
     console.log('andamos en el child \n',input)
     sendDataFromChild(input)
+    console.log(event)
 }
 
 

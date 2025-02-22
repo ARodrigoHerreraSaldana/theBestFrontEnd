@@ -94,3 +94,108 @@ input.untitledForm::placeholder {
     justify-content: center;
     margin-top: 10px
 }
+
+.success-message {
+    color: green;
+    font-weight: bold;
+}
+@media only screen and (max-width: 700px) {
+    .Question-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border-top: 5px solid #007bff;
+        /* border-top-color: #007bff; */
+        /* border-top-width: thick; */
+        width: 64%;
+    }
+    .untitledForm {
+        border-style: none;
+        border-radius: 0px;
+        font-size: 35px;
+        outline: none;
+    }
+    .form-description {
+        border-style: none;
+        border-radius: 0px;
+        outline: none;
+    
+    }
+    
+    .SuperContainerNavBar {
+        background-color: #E8E8E8;
+        padding-top: 10px;
+        height: 100vh;
+    }
+    
+    input.untitledForm::placeholder {
+        color: black;
+    }
+    
+    
+    .TheQuestions {
+        display: flex
+    ;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: white;
+        /* border-top-color: #007bff; */
+        /* border-top-width: thick; */
+        width: 50%;
+        margin: 0 auto;
+        margin-top: 9px;
+    }
+    
+    input.untitledForm::placeholder {
+        color: black;
+    }
+    
+    
+    .Question-header{
+        display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 92px;
+    }
+    
+    .button-sign-header{
+        padding: 10px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        height:40px;
+        width:40px;
+        border-radius: 30px;
+        margin: auto;
+    }
+    
+    .sign-form{
+        font-size: 18px;
+        position: relative;
+        top: -3px;
+    }
+    
+    
+    .AnotherQuestion{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .sendForm{
+        width: 140px;
+    }
+    
+    .containerButton2{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px
+    }
+    
+    
+}
