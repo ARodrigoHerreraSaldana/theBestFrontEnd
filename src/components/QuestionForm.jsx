@@ -92,8 +92,8 @@ const Question = () => {
         // console.log('e',transformArray(datafromChild))
         console.log(obj)
         await sendTemplate(obj);
-        // await sleep(1000)
-        // navigate('/dashboard/templates')
+        await sleep(1000)
+        navigate('/dashboard/templates')
       } else {
         setSuccess(false)
       }

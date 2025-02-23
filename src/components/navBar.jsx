@@ -1,7 +1,7 @@
 import '../components/navBar.css'
 import { Link } from 'react-router-dom'
 import { useNavigate, Outlet } from 'react-router-dom';
-
+import * as React from "react";
 async function getData() {
     try {
         const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_AUTH}/logout`, {
@@ -26,7 +26,14 @@ async function getData() {
       console.error(error.message);
     }
 }
+
+
+
+
+
 const Navbar = ({children}) => {
+
+
     const navigateTo = useNavigate();
 
     const handleClickPanel = async (e) => {
