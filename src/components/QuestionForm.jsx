@@ -4,15 +4,17 @@ import "../components/QuestionForm.css";
 import TheQuestions from "./TheQuestions.jsx";
 import { useLocation } from 'react-router-dom'
 
-async function sendTemplate() {
-    const url = "http://localhost:4000/logout";
+async function sendTemplate(data) {
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_WORK}/templates`, {
             credentials: "include",
-            method: 'DELETE',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+              obj:data,
+            }),
         });
         console.log(response)
         if (!response) {
@@ -31,38 +33,67 @@ async function sendTemplate() {
 }
 
 const Question = () => {
-  const [inputTitle, setInputTitle] = useState([
-    { title: "", description: "" },
-  ]);
+  const [inputTitle, setInputTitle] = useState({ title: "", description: "" },
+  );
   const [datafromChild, setDataFromChild]=useState({})
+  const [questionsfromchild,setQuestionsfromchild]=useState(1)
   const [success,setSuccess]=useState(false)
   const ref = useRef();
   const navigate = useNavigate();
   const location = useLocation();
+
   const handleDataFromChild= (data) => {
-    console.log(data)
     setDataFromChild(data);
   }
+
+  const handleQuestionsfromChild = (data) =>{
+    setQuestionsfromchild(data)
+    console.log('data', questionsfromchild)
+  } 
 
   const sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
 
+  const handleChange=(event)=>{
+    setInputTitle({...inputTitle,[event.target.name]: event.target.value,});
+  }
+
+  const transformArray = (testArray) =>{
+    let Auxobj={}
+    testArray.forEach((element,index) =>{
+        Object.keys(element).forEach((key)=>{
+            if(key!='multianswer')
+            {
+            Auxobj[`${key}${index+1}`]=element[key]
+            }
+            else {
+            Auxobj[`${key}${index+1}`] = element[key].join(',')
+            }
+        })
+    });
+    return Auxobj
+}
+
+
   const handleSubmit = async (event) => {
-    console.log('xxx')
     event.preventDefault();
- 
-   
-   
+
     if (event.target.checkValidity()) {
         setSuccess(true)
-        await sleep(1000)
-        navigate('/dashboard/templates')
+       
         let path=location.pathname.toString()
 
         let newString=path.substring(11)
-        console.log(newString)
-        
+        let obj={uuid:newString, title:inputTitle.title, description:inputTitle.description, ...transformArray(datafromChild)}
+        // console.log('a',newString)
+        // console.log('c',inputTitle.title)
+        // console.log('d',inputTitle.description)
+        // console.log('e',transformArray(datafromChild))
+        console.log(obj)
+        await sendTemplate(obj);
+        // await sleep(1000)
+        // navigate('/dashboard/templates')
       } else {
         setSuccess(false)
       }
@@ -77,14 +108,18 @@ const Question = () => {
             maxLength={30}
             className="untitledForm"
             placeholder="Untitled form"
+            name="title"
             value={inputTitle.title}
+            onChange={handleChange}
             required
           ></input>
           <input
             maxLength={30}
             className="form-description"
             placeholder="Form description"
+            name="description"
             value={inputTitle.description}
+            onChange={handleChange}
             required
           ></input>
         </div>
@@ -99,12 +134,13 @@ const Question = () => {
         </div>
       </div>
       <div>
-        <TheQuestions ref={ref} sendDataFromChild={handleDataFromChild}/>
+        <TheQuestions ref={ref} sendDataFromChild={handleDataFromChild} sendQuestionsFromChild={handleQuestionsfromChild}/>
       </div>
       <div className="containerButton2">
-      <button type="submit" className="sendForm" onClick={(event) => ref.current?.sendData(event)}>Submit</button>
-      {success &&  <span className="success-message">Form was sent to the server</span>}
+      <button type="submit" disabled={questionsfromchild < 1 ? true : false} className="sendForm" onClick={(event) => ref.current?.sendData(event)}>Submit</button>
+      
       </div>
+      {success &&  <div className="container-succes-message"><span className="success-message">Form was sent to the server</span></div>}
     </div>
     </form>
   );

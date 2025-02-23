@@ -6,24 +6,23 @@ import PropTypes from "prop-types";
 
 
 
-const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) {
+const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQuestionsFromChild }, ref) {
 
   
-  const [inputFields, setInputFields] = useState([{ question: '', answer: '' , multianswers:[], type:''}]);
+  const [inputFields, setInputFields] = useState([{ question: '', answer: '' , multianswer:[''], type:''}]);
   const [selectedOptions, setSelectedOptions] = useState([{typeofQuestion:'answer-text'}]);
 // Each question could have four radioOptions
-  const [radioOptions,setRadioOptions] = useState([{ question: [], answers: [] }])
+  const [radioOptions,setRadioOptions] = useState([{ question: '', answers: [''] }])
 
   //When is Text-Type
   const handleFormChange = (index, event,type, radioindex=0) => {
     let data = [...inputFields];
-    if(event.target.name!='multianswers'){
+    if(event.target.name!='multianswer'){
     data[index][event.target.name] = event.target.value;
     data[index].type=type
     setInputFields(data);
     }
     else{
-      console.log(index)
       data[index][event.target.name][radioindex]= event.target.value;
       data[index].type=type
       setInputFields(data);
@@ -35,7 +34,6 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) 
   const handleSelectChange = (index,event) => {
     console.log(event.target.name, event.target.value)
     let data = [...selectedOptions];
-    console.log(data)
     data[index][event.target.name] = event.target.value;
     setSelectedOptions(data);
   };
@@ -43,9 +41,9 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) 
 
 // Note removeQuestion and newQuestion are complementary...
   const newQuestion = () => {
-    let newfield = { question: "", answer: "" , multianswers:[''], type:''};
+    let newfield = { question: "", answer: "" , multianswer:[''], type:''};
     let newSelector={typeofQuestion:'answer-text'}
-    let newRowRadioButton={ question: "", answers: [''] };
+    let newRowRadioButton={ question: '', answers: [''] };
     //Maxium 4 Questions
     let metaInputFields = [...inputFields];
     if (metaInputFields.length < 4) 
@@ -53,6 +51,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) 
             setInputFields([...inputFields, newfield]);
             setSelectedOptions([...selectedOptions,newSelector]);
             setRadioOptions([...radioOptions,newRowRadioButton]);
+            sendQuestionsFromChild(inputFields.length+1);
         }
   };
 
@@ -66,6 +65,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) 
     setInputFields(data);
     setSelectedOptions(dataSelect);
     setRadioOptions(dataRemoveRadioButton);
+    sendQuestionsFromChild(inputFields.length-1);
   };
 
   const newQuestionRadioButton = (index) => {
@@ -75,7 +75,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) 
     if (metaRadioOptions[index].answers.length < 4) 
         {
             metaRadioOptions[index].answers.push('')
-            metaInputFields[index].multianswers.push('')
+            metaInputFields[index].multianswer.push('')
             setRadioOptions([...radioOptions]);
             setInputFields([...inputFields]);
         }
@@ -88,7 +88,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) 
    if (metaRadioOptions[index].answers.length > 0) 
        {
            metaRadioOptions[index].answers.pop()
-           metaInputFields[index].multianswers.pop('')
+           metaInputFields[index].multianswer.pop('')
            setRadioOptions([...radioOptions]);
            setInputFields([...inputFields]);
        }
@@ -106,9 +106,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild}, ref) 
 // }
 const sendData =(event) =>{
     let input=[...inputFields];
-    console.log('andamos en el child \n',input)
     sendDataFromChild(input)
-    console.log(event)
 }
 
 
@@ -201,10 +199,10 @@ const sendData =(event) =>{
                   />
                     <input
                   className="theTypeofQuestion"
-                  name="multianswers"
+                  name="multianswer"
                   maxLength={30}
                   placeholder="Answers"
-                  value={input.multianswers[radioindex]}
+                  value={input.multianswer[radioindex]}
                   onChange={(event) => handleFormChange(index, event, 'multi', radioindex)}
                   required
                 />
@@ -225,6 +223,7 @@ const sendData =(event) =>{
 
 TheQuestions.propTypes = {
   sendDataFromChild: PropTypes.func.isRequired,
+  sendQuestionsFromChild:PropTypes.func.isRequired
 };
 
 export default TheQuestions;

@@ -8,6 +8,12 @@
     /* border-top-width: thick; */
     width: 53%;
 }
+.container-succes-message {
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+}
 .untitledForm {
     border-style: none;
     border-radius: 0px;
@@ -24,7 +30,7 @@
 .SuperContainerNavBar {
     background-color: #E8E8E8;
     padding-top: 10px;
-    height: 100vh;
+    height: 250vh;
 }
 
 input.untitledForm::placeholder {
@@ -126,7 +132,7 @@ input.untitledForm::placeholder {
     .SuperContainerNavBar {
         background-color: #E8E8E8;
         padding-top: 10px;
-        height: 100vh;
+        height: 250vh;
     }
     
     input.untitledForm::placeholder {
