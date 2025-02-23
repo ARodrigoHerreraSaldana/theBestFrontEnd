@@ -4,7 +4,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 
 async function getData() {
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL_2}/logout`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_AUTH}/logout`, {
             credentials: "include",
             method: 'DELETE',
             headers: {

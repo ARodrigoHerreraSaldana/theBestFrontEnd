@@ -26,7 +26,7 @@ const [error, setError] = useState(null);
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/lastLogin`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_WORK}/lastLogin`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
 

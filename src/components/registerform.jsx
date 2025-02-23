@@ -67,7 +67,7 @@ const FormRegistrationApp = () => {
         try {
             // Post the form data to the API
             console.log('xxx')
-            const response = await fetch(`${import.meta.env.VITE_API_URL}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_WORK}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
