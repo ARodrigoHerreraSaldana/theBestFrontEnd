@@ -41,7 +41,7 @@ const FormRegistrationApp = () => {
 
 
     //   const finishSubmit = () => {
-    //     console.log(inputFields);
+    //     
     //   };
     //   useEffect(() => {
     //     if (Object.keys(errors).length === 0 && submitting) {
@@ -66,8 +66,8 @@ const FormRegistrationApp = () => {
          }
         try {
             // Post the form data to the API
-            console.log('xxx')
-            const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_WORK}`, {
+            
+            const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_WORK}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const FormRegistrationApp = () => {
                 }),
             });
             const responseJSON = await response.json();
-            console.log(responseJSON)
+            
             if (response.status == '200') {
                 setApiResponse({ status: 'correct', message: responseJSON.message || 'ok' })
                 await sleep(1000)

@@ -11,7 +11,7 @@ async function getData() {
                 'Content-Type': 'application/json',
             },
         });
-        console.log(response)
+        
         if (!response) {
             throw new Error(`Response status: ${response.status}`);
         }
@@ -21,7 +21,7 @@ async function getData() {
         }
   
       const json = await response.json();
-      console.log(json);
+      
     } catch (error) {
       console.error(error.message);
     }
@@ -46,19 +46,19 @@ const Navbar = ({children}) => {
     }
   
       const handleClickLogOut = async (e) => {
-        console.log(e)
+        
         const result=await getData()
-        console.log(result)
+        
         if(!result)
         {
             e.preventDefault();
             e.stopPropagation();
-            console.log('Can not proceed');
+            
             
         }
         else
         {
-            console.log('xxx')
+            
             navigateTo('/')
         }
       }

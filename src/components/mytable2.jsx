@@ -38,7 +38,7 @@ const fetchData = async () => {
               created_at:element.created_at,
               status:element.status
           }})
-    console.log(rows)
+    
     } catch (err) {
         console.error(err.message)
     }
@@ -214,7 +214,7 @@ export default function EnhancedTable() {
   };
 
   const handleSelectAllClick = (event) => {
-    console.log('clicked')
+    
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
@@ -260,17 +260,17 @@ export default function EnhancedTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     const visibleRows = React.useMemo(() => {
-        // console.log('Recalculating visibleRows...');
-        // console.log('Order:', order);
-        // console.log('OrderBy:', orderBy);
-        // console.log('Page:', page);
-        // console.log('RowsPerPage:', rowsPerPage);
+        // 
+        // 
+        // 
+        // 
+        // 
       
         const sortedRows = [...rows].sort(getComparator(order, orderBy));
-        console.log('Sorted Rows:', sortedRows , 'order',order, 'orderBy', orderBy);
+        
       
         const paginatedRows = sortedRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-        console.log('Paginated Rows:', paginatedRows);
+        
       
         return paginatedRows;
       }, [order, orderBy, page, rowsPerPage]);
@@ -297,7 +297,7 @@ export default function EnhancedTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                console.log('x', row)
+                
                 const isItemSelected = selected.includes(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 

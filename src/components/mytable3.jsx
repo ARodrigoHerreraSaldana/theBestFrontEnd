@@ -39,7 +39,7 @@ const fetchTable = async () => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const result = await response.json();
-    console.log(result)
+    
     let rows = result.message[0].map((element, index) => {
       return {
         id: index + 1,
@@ -50,7 +50,7 @@ const fetchTable = async () => {
         status: element.isActive,
       };
     });
-    console.log(rows)
+    
     return rows;
     
   } catch (err) {
@@ -326,7 +326,7 @@ export default function EnhancedTable2() {
  
   const logOut = function () {
     logout().then(() => {
-    console.log(state)
+    
     navigate(state?.path || "/");
     })
   }

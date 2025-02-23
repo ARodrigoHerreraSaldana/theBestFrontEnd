@@ -16,7 +16,7 @@ async function sendTemplate(data) {
               obj:data,
             }),
         });
-        console.log(response)
+        
         if (!response) {
             throw new Error(`Response status: ${response.status}`);
         }
@@ -26,7 +26,7 @@ async function sendTemplate(data) {
         }
   
       const json = await response.json();
-      console.log(json);
+      
     } catch (error) {
       console.error(error.message);
     }
@@ -48,7 +48,7 @@ const Question = () => {
 
   const handleQuestionsfromChild = (data) =>{
     setQuestionsfromchild(data)
-    console.log('data', questionsfromchild)
+    
   } 
 
   const sleep = (ms) => {
@@ -86,11 +86,11 @@ const Question = () => {
 
         let newString=path.substring(11)
         let obj={uuid:newString, title:inputTitle.title, description:inputTitle.description, ...transformArray(datafromChild)}
-        // console.log('a',newString)
-        // console.log('c',inputTitle.title)
-        // console.log('d',inputTitle.description)
-        // console.log('e',transformArray(datafromChild))
-        console.log(obj)
+        // 
+        // 
+        // 
+        // 
+        
         await sendTemplate(obj);
         await sleep(1000)
         navigate('/dashboard/templates')

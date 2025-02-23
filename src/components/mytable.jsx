@@ -33,7 +33,7 @@ useEffect(() => {
       }
       const result = await response.json();
       rows = result.map((element)=>element)
-      console.log('rows',rows)
+      
       setData(result);
       setLoading(false); // Set loading to false after data is fetched
     } catch (err) {

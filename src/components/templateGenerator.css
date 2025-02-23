@@ -26,6 +26,30 @@
     margin-left: 10px;
 }
 
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 23px;
+    margin: auto;
+    align-content: center;
+    justify-content: center;
+}
+
+.card {
+    border: 1px solid;
+    width: 16%;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+h2.cardTitle {
+    font-size: 1.5em;
+}
+h3.cardAuthor {
+    overflow: hidden;
+    font-size: 0.8em;
+}
 @media(max-width: 650px) {
     .containerGenerator{
         display:flex;

@@ -17,7 +17,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setBlockLogin(true)
-    console.log(import.meta.env.VITE_API_URL_SERVER_WORK)
+    
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_AUTH}/login`, {
         credentials: "include",
@@ -31,11 +31,11 @@ const Login = () => {
         }),
       });
       var responseJSON = await response.json();
-      console.log(responseJSON)
+      
       if (response.status == "200") {
         setApiResponse({ status: 'correct', message: responseJSON.message || 'ok' })
         login().then(() => {
-          navigate(state?.path || "/dashboard");
+          navigate(state?.path || "/dashboard/templates");
         });
         
       }

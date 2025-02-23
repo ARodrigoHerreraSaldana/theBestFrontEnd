@@ -13,15 +13,15 @@ async function getCards() {
               'Content-Type': 'application/json',
           },
       });
-      console.log(response);
+      
 
-      if (!response.ok) {
+      if (!response) {
           throw new Error(`Response status: ${response.status}`);
       }
 
       if (response.status === 200) {
           const json = await response.json();
-          console.log(json);
+          
           return json;
       }
   } catch (error) {
@@ -35,9 +35,9 @@ async function getCards() {
 const Card = ({ author, title, description }) => {
   return (
       <div className="card">
-          <h2>{title}</h2>
-          <h3>{author}</h3>
-          <p>{description}</p>
+          <h2 className="cardTitle">{title}</h2>
+          <h3 className="cardAuthor">{author}</h3>
+          <p  className="cardDescription">{description}</p>
       </div>
   );
 };
@@ -45,7 +45,7 @@ const Card = ({ author, title, description }) => {
 const CardList = ({ data }) => {
   return (
       <div className="card-list">
-{data.message && data.message.map((item, index) => (
+{data && data.map((item, index) => (
     <Card key={index} author={item.author} title={item.title} description={item.description} />
 ))}
       </div>
@@ -72,7 +72,8 @@ React.useEffect(() => {
   const fetchData = async () => {
     try {
       const result = await getCards();
-      setData(result)
+      
+      setData(result.message || [])
     } catch (error) {
       console.error('Error fetching data:', error);
     } 
@@ -94,6 +95,7 @@ React.useEffect(() => {
         </div>
     </div>
     <div>
+    <h1 className="titleGenerator">Fill templates</h1>
 <CardList data={data} />
     </div>
     </>

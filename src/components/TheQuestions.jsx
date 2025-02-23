@@ -32,7 +32,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQue
 
  //Drop-Down
   const handleSelectChange = (index,event) => {
-    console.log(event.target.name, event.target.value)
+    
     let data = [...selectedOptions];
     data[index][event.target.name] = event.target.value;
     setSelectedOptions(data);
@@ -71,7 +71,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQue
   const newQuestionRadioButton = (index) => {
      let metaRadioOptions = [...radioOptions];
      let metaInputFields = [...inputFields];
-     console.log(metaRadioOptions);     
+     
     if (metaRadioOptions[index].answers.length < 4) 
         {
             metaRadioOptions[index].answers.push('')
@@ -84,7 +84,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQue
   const deleteLastQuestionRadioButton = (index) => {
     let metaRadioOptions = [...radioOptions];
     let metaInputFields = [...inputFields];
-    console.log(metaRadioOptions);     
+    
    if (metaRadioOptions[index].answers.length > 0) 
        {
            metaRadioOptions[index].answers.pop()
@@ -100,7 +100,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQue
 //   {
 //     for(let key in x)
 //     {
-// console.log('key', key, x[key])
+// 
 //     }    
 //   }
 // }
