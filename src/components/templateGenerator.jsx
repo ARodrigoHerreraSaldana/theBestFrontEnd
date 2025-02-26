@@ -32,11 +32,21 @@ async function getCards() {
 
 
 
-const Card = ({ author, title, description }) => {
+const Card = ({ author, title, description,index, uuidParent}) => {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const fillTemplate = () => {
+    console.log(uuidParent)
+    let id= uuid()
+    navigate(state?.path || '/answerTemplates/'+id);
+  }
+
   return (
-      <div className="card">
+      <div className="card" onClick={fillTemplate}>
+          <img src={`https://picsum.photos/800/400?random=${index}`} />
           <h2 className="cardTitle">{title}</h2>
-          <h3 className="cardAuthor">{author}</h3>
+          <h3 className="cardAuthor">Author:{author}</h3>
           <p  className="cardDescription">{description}</p>
       </div>
   );
@@ -46,7 +56,7 @@ const CardList = ({ data }) => {
   return (
       <div className="card-list">
 {data && data.map((item, index) => (
-    <Card key={index} author={item.author} title={item.title} description={item.description} />
+    <Card key={index} author={item.author} title={item.title} description={item.description} index={index} uuidParent={item.uuid}/>
 ))}
       </div>
   );
@@ -87,15 +97,11 @@ React.useEffect(() => {
   return (
     <>
     <div className='containerGenerator'>
-      <h1 className="titleGenerator">Create new Template</h1>
-      <div className='containerButton'>
-      <button className='button-sign' onClick={createNewTemplate}>
-        <span className='sign'>+</span>
-        </button>
-        </div>
+    <h1 className="titleGenerator">Popular templates</h1>
+    <h1 className="titleGenerator-new" onClick={createNewTemplate}>Create new Template</h1>
     </div>
     <div>
-    <h1 className="titleGenerator">Fill templates</h1>
+    
 <CardList data={data} />
     </div>
     </>

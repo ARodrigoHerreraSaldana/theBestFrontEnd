@@ -13,7 +13,8 @@ import EnhancedTable2 from './components/mytable3.jsx';
 import Navbar from './components/navBar.jsx';
 import TemplateGenerator from './components/templateGenerator.jsx';
 import Question from './components/QuestionForm.jsx';
-
+import store from './app/store'
+import { Provider } from 'react-redux'
 function App() {
     return (
       <Router>
@@ -35,6 +36,15 @@ function App() {
 
 
             <Route path="/templates/:id" element={
+              
+              // {/* <RequireAuth> */}}
+              // {/* </RequireAuth> */}
+              <Navbar>
+              <Question/>
+              </Navbar>
+              }/>
+
+          <Route path="/answerTemplates/:id" element={
               
               // {/* <RequireAuth> */}}
               // {/* </RequireAuth> */}
