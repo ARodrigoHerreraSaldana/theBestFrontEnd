@@ -12,7 +12,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQue
   const [inputFields, setInputFields] = useState([{ question: '', answer: '' , multianswer:[''], type:''}]);
   const [selectedOptions, setSelectedOptions] = useState([{typeofQuestion:'answer-text'}]);
 // Each question could have four radioOptions
-  const [radioOptions,setRadioOptions] = useState([{ question: '', answers: [''] }])
+  const [radioOptions,setRadioOptions] = useState([{ question: '', answers: ['',''] }])
 
   //When is Text-Type
   const handleFormChange = (index, event,type, radioindex=0) => {
@@ -43,7 +43,8 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQue
   const newQuestion = () => {
     let newfield = { question: "", answer: "" , multianswer:[''], type:''};
     let newSelector={typeofQuestion:'answer-text'}
-    let newRowRadioButton={ question: '', answers: [''] };
+    let newRowRadioButton={ question: '', answers: ['','']};
+    
     //Maxium 4 Questions
     let metaInputFields = [...inputFields];
     if (metaInputFields.length < 4) 
@@ -72,7 +73,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQue
      let metaRadioOptions = [...radioOptions];
      let metaInputFields = [...inputFields];
      
-    if (metaRadioOptions[index].answers.length < 4) 
+    if (metaRadioOptions[index].answers.length < 4 && metaRadioOptions[index].answers.length > 1) 
         {
             metaRadioOptions[index].answers.push('')
             metaInputFields[index].multianswer.push('')
@@ -85,7 +86,7 @@ const TheQuestions = forwardRef(function TheQuestions({sendDataFromChild,sendQue
     let metaRadioOptions = [...radioOptions];
     let metaInputFields = [...inputFields];
     
-   if (metaRadioOptions[index].answers.length > 0) 
+   if (metaRadioOptions[index].answers.length > 2) 
        {
            metaRadioOptions[index].answers.pop()
            metaInputFields[index].multianswer.pop('')
@@ -202,7 +203,7 @@ const sendData =(event) =>{
                   name="multianswer"
                   maxLength={30}
                   placeholder="Answers"
-                  value={input.multianswer[radioindex]}
+                  value={input.multianswer[radioindex]||''}
                   onChange={(event) => handleFormChange(index, event, 'multi', radioindex)}
                   required
                 />

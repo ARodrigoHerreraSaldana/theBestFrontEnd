@@ -4,6 +4,7 @@ import "../components/QuestionForm.css";
 import TheQuestions from "./TheQuestions.jsx";
 import { useLocation } from 'react-router-dom'
 
+
 async function sendTemplate(data) {
     try {
         const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_WORK}/templates`, {

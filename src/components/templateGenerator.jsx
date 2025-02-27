@@ -3,6 +3,8 @@ import '../components/templateGenerator.css'
 import uuid from 'react-uuid';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useAuth from "../../auth/authorizer.jsx";
+import { useSelector,useDispatch } from "react-redux";
+import { set } from "./stringSlice.js";
 
 async function getCards() {
   try {
@@ -35,10 +37,11 @@ async function getCards() {
 const Card = ({ author, title, description,index, uuidParent}) => {
   const navigate = useNavigate();
   const { state } = useLocation();
-
+  const dispatch = useDispatch();
   const fillTemplate = () => {
     console.log(uuidParent)
     let id= uuid()
+    dispatch(set(uuidParent))
     navigate(state?.path || '/answerTemplates/'+id);
   }
 
@@ -71,6 +74,7 @@ const { login } = useAuth();
 const navigate = useNavigate();
 const { state } = useLocation();
 const [data,setData]=React.useState([]);
+
   const createNewTemplate = () => {
   const id = uuid()
   login().then(() => {
