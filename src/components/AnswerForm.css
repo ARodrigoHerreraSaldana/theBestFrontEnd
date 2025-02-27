@@ -26,3 +26,13 @@ input.radio-answers {
     width: 16%;
     box-sizing: border-box;
 }
+
+.success-message-answer {
+    color: green;
+    font-weight: bold;
+}
+
+.failure-message-answer {
+    color: red;
+    font-weight: bold;
+}

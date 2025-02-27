@@ -29,6 +29,36 @@ const stringToArrayhelper = (obj) => {
     console.log("metaobj", metaobj);
     return metaobj;
 };
+
+async function sendAnswer(data) {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL_SERVER_WORK}/answers`, {
+            credentials: "include",
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              obj:data,
+            }),
+        });
+        console.log('response-sendAnswer',response)
+        if (!response) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        if(response.status==200)
+        {
+            const json = await response.json();
+            return true
+        }
+  
+    } catch (error) {
+      console.error(error.message);
+    }
+}
+
+
+
 async function getTemplate(data) {
     try {
         const response = await fetch(
@@ -52,7 +82,7 @@ async function getTemplate(data) {
             const json = await response.json();
             let meta = [json.message];
             const newData = stringToArrayhelper(...meta);
-
+            
             console.log("json ->", newData);
             console.log("sending response");
             return [newData];
@@ -63,7 +93,7 @@ async function getTemplate(data) {
 }
 
 export const AnswerForm = () => {
-
+    const count = useSelector((state) => state.stringS.value);
     const [data, setData] = React.useState([]);
     const [answer, setAnswer] = React.useState({
         answer1: "",
@@ -74,6 +104,7 @@ export const AnswerForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [success, setSuccess] = useState(false);
+    const [failure,setFailure] =useState(false);
     const sleep = (ms) => {
         return new Promise((resolve) => setTimeout(resolve, ms));
     };
@@ -86,16 +117,32 @@ export const AnswerForm = () => {
         event.preventDefault();
 
         if (event.target.checkValidity()) {
-            console.log(answer);
-            await sleep(1000);
-
-            navigate("/dashboard/templates");
+            //sendAnswer()
+            console.log('answer',answer);
+            console.log('count', count)
+            let obj ={ "uuid":count, ... answer}
+            const result=await sendAnswer(obj)
+            console.log(result)
+            if(result)
+            {
+                setSuccess(true)
+                setFailure(false);
+                await sleep(5000);
+                navigate("/dashboard/templates");
+            }
+            else
+            {
+                setSuccess(false);
+                setFailure(true);
+            }
+            
         } else {
             setSuccess(false);
+            setFailure(false);
         }
     };
 
-    const count = useSelector((state) => state.stringS.value);
+    
     React.useEffect(() => {
         const getData = async () => {
             try {
@@ -131,7 +178,6 @@ export const AnswerForm = () => {
                         <span>{data[0][a_[`question`]]}</span>
                         
                         {data[0][a_[`type`]]  == 'simple' ? (<>
-                          <p>hello2</p>
                           <input
                             maxLength={30}
                             placeholder="answer"
@@ -174,18 +220,27 @@ export const AnswerForm = () => {
                     <button type="submit" value="Submit">
                       Submit
                     </button>
-                    {success && (
-                      <div className="container-succes-message">
-                        <span className="success-message">
-                          Answers were sent to the server
-                        </span>
-                      </div>
-                    )}
+          
                   </div>
                 </div>
               </div>
             </form>
           )}
+
+{success && (
+                      <div className="container-succes-message">
+                        <span className="success-message-answer">
+                          Answers were sent to the server
+                        </span>
+                      </div>
+                    )}
+                {failure && (
+                      <div className="container-succes-message">
+                        <span className="failure-message-answer">
+                          Answers could not be sent to the server
+                        </span>
+                      </div>
+                    )}
         </>
       );
     };
