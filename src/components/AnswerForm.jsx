@@ -5,114 +5,189 @@ import TheQuestions from "./TheQuestions.jsx";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
-
+import "./AnswerForm.css";
+const a = [
+    { question: 'question1', answer: 'answer1', multi: 'multianswer1', type:'type1' },
+    { question: 'question2', answer: 'answer2', multi: 'multianswer2', type:'type2' },
+    { question: 'question3', answer: 'answer3', multi: 'multianswer3' ,type:'type3'},
+    { question: 'question4', answer: 'answer4', multi: 'multianswer4',type:'type4' }
+  ];
+const stringToArrayhelper = (obj) => {
+    let metaobj = obj;
+    for (const x in metaobj) {
+        if (
+            x == "multianswer1" ||
+            x == "multianswer2" ||
+            x == "multianswer3" ||
+            x == "multianswer4"
+        ) {
+            if (metaobj[x] != null) {
+                metaobj[x] = metaobj[x].split(",");
+            }
+        }
+    }
+    console.log("metaobj", metaobj);
+    return metaobj;
+};
 async function getTemplate(data) {
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL_SERVER_WORK}/cards/uuid`,
-      {
-        credentials: "include",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          uuid: data,
-        }),
-      }
-    );
+    try {
+        const response = await fetch(
+            `${import.meta.env.VITE_API_URL_SERVER_WORK}/cards/uuid`,
+            {
+                credentials: "include",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    uuid: data,
+                }),
+            }
+        );
 
-    if (!response) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-    if (response.status == 200) {
-        const json = await response.json();
-        let meta=[json.message]
-        console.log('json',meta)
-      return meta;
-    }
+        if (!response) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        if (response.status == 200) {
+            const json = await response.json();
+            let meta = [json.message];
+            const newData = stringToArrayhelper(...meta);
 
-    
-  } catch (error) {
-    console.error(error.message);
-  }
+            console.log("json ->", newData);
+            console.log("sending response");
+            return [newData];
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
 }
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-};
 export const AnswerForm = () => {
-const [data,setData]=React.useState([]);
-  const count = useSelector((state) => state.stringS.value);
-  React.useEffect(() => {
-    const getData = async () => {
-      try {
-         const result = await getTemplate(count);
-        setData(result)
-        } catch (error) {
-        console.error(error);
-      }
+
+    const [data, setData] = React.useState([]);
+    const [answer, setAnswer] = React.useState({
+        answer1: "",
+        answer2: "",
+        answer3: "",
+        answer4: "",
+    });
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [success, setSuccess] = useState(false);
+    const sleep = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
     };
-    getData();
-  }, [count]);
-console.log('data' ,data)
-  return (
-    <form onSubmit={handleSubmit}>
-     {
-    data.length>0 && <>
-<div className="AnswerContainerNavBar">
-      <div className="Answer-header">
-        <div className="Answer-container">
-          <h1
-          >
-{data[0].title}
-    </h1>
-    <p>
-        Author: <span>{data[0].author}</span>
-    </p>
-    <p>
-    <span>{data[0].description}</span>
-    </p>
+
+    const handleChange = (event) => {
+        setAnswer({ ...answer, [event.target.name]: event.target.value });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (event.target.checkValidity()) {
+            console.log(answer);
+            await sleep(1000);
+
+            navigate("/dashboard/templates");
+        } else {
+            setSuccess(false);
+        }
+    };
+
+    const count = useSelector((state) => state.stringS.value);
+    React.useEffect(() => {
+        const getData = async () => {
+            try {
+                const result = await getTemplate(count);
+                console.log("result ->", result);
+                setData(result);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        getData();
+    }, [count]);
+    console.log("data", data);
+    return (
+        <>
+          {data.length > 0 && (
+            <form className="answer-form" onSubmit={handleSubmit}>
+              <div className="AnswerContainerNavBar">
+                <div className="Answer-header">
+                  <div className="Answer-container">
+                    <h1>{data[0].title}</h1>
+                    <p>
+                      Author: <span>{data[0].author}</span>
+                    </p>
+                    <p>
+                      <span>{data[0].description}</span>
+                    </p>
+    {a.map((a_,index)=>(<>
+
+    {/* Every array should follow this template */}
+                    {data[0][a_[`question`]] && data[0][a_[`type`]] != null && (
+                      <div className="Question">
+                        <span>{data[0][a_[`question`]]}</span>
+                        
+                        {data[0][a_[`type`]]  == 'simple' ? (<>
+                          <p>hello2</p>
+                          <input
+                            maxLength={30}
+                            placeholder="answer"
+                            name={a_[`answer`]}
+                            value={answer[a_[`answer`]]}
+                            onChange={handleChange}
+                            required
+                          />
+                          </>
+                        ) : (
+                          <>
+                            {data[0][a_[`multi`]] !== null &&
+                              data[0][a_[`multi`]].length > 0 &&
+                              data[0][a_[`multi`]].map((da, index) => (
+                                <div key={index}>
+
+                                  <div className="possible-answers">
+                                    <input
+                                      type="radio"
+                                      maxLength={30}
+                                      className="radio-answers"
+                                      placeholder="answer"
+                                      name={a_[`answer`]}
+                                      value={data[0][a_[`multi`]][index]}
+                                      onChange={handleChange}
+                                      required
+                                    />
+                                    <label>{data[0][a_[`multi`]][index]}</label>
+                                  </div>
+                                </div>
+                              ))} 
+                          </>
+                        )}
+                      </div>
+                    )}
+ {/* Every array should follow this template */}
+
+ </>))}
     
-    {data[0].question1!=null ? (
-        <div className="Question">
-    <span>{data[0].question1}</span>
-    <input>
-    </input>
-    </div>):null}
-
-    {data[0].question2!=null ? (
-        <div className="Question">
-    <span>{data[0].question2}</span>
-    <input>
-    </input>
-    </div>):null}
-
-
-
-    {data[0].question3!=null ? (
-        <div className="Question">
-    <span>{data[0].question3}</span>
-    <input>
-    </input>
-    </div>):null}
-
-
-
-    {data[0].question4!=null ? (
-        <div className="Question">
-    <span>{data[0].question3}</span>
-    <input>
-    </input>
-    </div>):null}
-
-    </div>
-        </div>
-      </div>
-</>
-          }
-    </form>
+                    <button type="submit" value="Submit">
+                      Submit
+                    </button>
+                    {success && (
+                      <div className="container-succes-message">
+                        <span className="success-message">
+                          Answers were sent to the server
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </form>
+          )}
+        </>
+      );
+    };
     
-  );
-};
-export default AnswerForm;
+    export default AnswerForm;

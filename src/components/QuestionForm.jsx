@@ -143,6 +143,7 @@ const Question = () => {
       </div>
       {success &&  <div className="container-succes-message"><span className="success-message">Form was sent to the server</span></div>}
     </div>
+    <input type="submit" value="Submit" />
     </form>
   );
 };
