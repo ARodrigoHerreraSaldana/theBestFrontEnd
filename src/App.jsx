@@ -14,7 +14,7 @@ import Navbar from './components/navBar.jsx';
 import TemplateGenerator from './components/templateGenerator.jsx';
 import Question from './components/QuestionForm.jsx';
 import AnswerForm from './components/AnswerForm.jsx';
-
+import AllTheAnswers from './components/AllTheAnswers.jsx';
 function App() {
     return (
       <Router>
@@ -32,6 +32,7 @@ function App() {
                }>
               <Route path="templates"  element={<TemplateGenerator/>}/>
               <Route path="panel"  element={<EnhancedTable2/>}/>  
+              <Route path="answers" element={<AllTheAnswers/>}/>
             </Route>
 
 
@@ -53,7 +54,14 @@ function App() {
               </Navbar>
               }/>
 {/* <Route path="/Counter" element = {<Counter/>}></Route> */}
+
+
+
+
+
           </Routes>
+
+
 
       </Router>
     );
