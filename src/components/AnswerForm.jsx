@@ -127,7 +127,7 @@ export const AnswerForm = () => {
             {
                 setSuccess(true)
                 setFailure(false);
-                await sleep(5000);
+                await sleep(3000);
                 navigate("/dashboard/templates");
             }
             else
