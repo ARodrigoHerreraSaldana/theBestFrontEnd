@@ -1,6 +1,6 @@
 import React from 'react';
 import Cookies from "js-cookie";
-import './Salesforce.css';
+import './SalesForce.css';
 
 const Salesforce = () => {
   const urlText = `${import.meta.env.VITE_API_URL_SALES_FORCE}/auth`; 
