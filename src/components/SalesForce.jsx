@@ -4,7 +4,7 @@ import './SalesForce.css';
 
 const Salesforce = () => {
   const urlText = `${import.meta.env.VITE_API_URL_SALES_FORCE}/auth`; 
-
+  console.log(urlText)
   const handleClick = (event) => {
     event.preventDefault();
     window.location.href = urlText;
