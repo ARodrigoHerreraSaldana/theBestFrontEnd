@@ -121,7 +121,7 @@ const SalesForceForm = () => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <div className="form-containerSalesForce">
+            <div className="form-container">
               <label>Telephone</label>
               <input
                 type="tel"
