@@ -50,6 +50,13 @@ const Navbar = ({children}) => {
         navigateTo('/dashboard/answers')
     }
   
+    const handleClickSalesForce = async (e) => {
+        
+        navigateTo('/dashboard/salesForce')
+    }
+
+
+
       const handleClickLogOut = async (e) => {
         
         const result=await getData()
@@ -83,6 +90,9 @@ const Navbar = ({children}) => {
 
                     <li>
                     <button onClick={handleClickPanel} >Admin Panel</button>
+                    </li>
+                    <li>
+                    <button onClick={handleClickSalesForce} >SalesForce</button>
                     </li>
                     <li>
                     <button onClick={handleClickLogOut} >LogOut</button>
